@@ -1,0 +1,9 @@
+{
+  "name": "mente-en-calma",
+  "version": "1.0.0",
+  "description": "Página de psicología con pagos via Mercado Pago",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
