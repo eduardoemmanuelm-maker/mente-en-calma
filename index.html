@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psicorlogía · Psicología</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5efe6;
+      --warm-beige: #e8ddd0;
+      --terracotta: #c4714a;
+      --terracotta-light: #d9896a;
+      --sage: #7a9e87;
+      --sage-dark: #4e7460;
+      --brown: #5c3d2e;
+      --brown-light: #8b6354;
+      --text: #3a2e28;
+      --text-light: #7a6a60;
+      --white: #fdfaf7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245, 239, 230, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 113, 74, 0.15);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--brown);
+      letter-spacing: 0.02em;
+    }
+
+    .logo span.accent { color: var(--terracotta); font-style: italic; }
+    .logo span.muted { color: var(--brown-light); font-style: normal; }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    nav ul a:hover { color: var(--terracotta); }
+
+    .nav-cta {
+      background: var(--terracotta);
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 500 !important;
+      transition: background 0.3s !important;
+    }
+
+    .nav-cta:hover { background: var(--terracotta-light) !important; color: var(--white) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .blob-1 {
+      width: 500px; height: 500px;
+      background: var(--terracotta-light);
+      top: -100px; right: -100px;
+    }
+
+    .blob-2 {
+      width: 350px; height: 350px;
+      background: var(--sage);
+      bottom: 50px; left: -80px;
+    }
+
+    .hero-text {
+      padding: 10rem 3rem 5rem 5rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(122, 158, 135, 0.2);
+      color: var(--sage-dark);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.1;
+      color: var(--brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(196, 113, 74, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--terracotta-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(196, 113, 74, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brown);
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--warm-beige);
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brown-light);
+      background: rgba(92, 61, 46, 0.05);
+    }
+
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10rem 3rem 5rem 2rem;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .card-float {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 340px;
+      box-shadow: 0 20px 60px rgba(92, 61, 46, 0.12);
+      position: relative;
+    }
+
+    .card-float::before {
+      content: '🌿';
+      position: absolute;
+      top: -18px;
+      right: 24px;
+      font-size: 2.2rem;
+    }
+
+    .card-float h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-float p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .mini-slot {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 0.7rem 1rem;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.83rem;
+    }
+
+    .mini-slot span { color: var(--text-light); }
+
+    .slot-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .slot-dot.available { background: var(--sage); }
+    .slot-dot.taken { background: var(--warm-beige); }
+
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--warm-beige);
+    }
+
+    .stat { text-align: center; flex: 1; }
+    .stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--terracotta);
+    }
+    .stat small { font-size: 0.72rem; color: var(--text-light); }
+
+    /* ─── SERVICES ─── */
+    .section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .services {
+      padding: 6rem 5rem;
+      background: var(--white);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--brown);
+      line-height: 1.2;
+    }
+
+    .section-title em { font-style: italic; color: var(--terracotta); }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-top: 0.8rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--terracotta), var(--sage));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(92,61,46,0.1); }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: var(--brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--terracotta);
+    }
+
+    .price-label { font-size: 0.8rem; color: var(--text-light); }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(122, 158, 135, 0.15);
+      color: var(--sage-dark);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      margin-top: 0.5rem;
+    }
+
+    /* ─── BOOKING FORM ─── */
+    .booking {
+      padding: 6rem 5rem;
+      background: var(--cream);
+    }
+
+    .booking-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .booking-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--brown);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .booking-info h2 em { font-style: italic; color: var(--terracotta); }
+
+    .booking-info p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+
+    .info-icon {
+      width: 36px; height: 36px;
+      background: var(--white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 40px rgba(92, 61, 46, 0.08);
+    }
+
+    .form-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--brown);
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-light);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--cream);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(196, 113, 74, 0.12);
+      background: var(--white);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .modality-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .modality-option {
+      flex: 1;
+      position: relative;
+    }
+
+    .modality-option input[type="radio"] {
+      display: none;
+    }
+
+    .modality-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: var(--cream);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: var(--text-light);
+    }
+
+    .modality-option input:checked + .modality-label {
+      background: rgba(196, 113, 74, 0.1);
+      border-color: var(--terracotta);
+      color: var(--terracotta);
+      font-weight: 500;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(196, 113, 74, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--terracotta-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(196, 113, 74, 0.35);
+    }
+
+    .payment-notice {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      justify-content: center;
+    }
+
+    /* ─── CALENDAR ─── */
+    .calendar-section {
+      padding: 6rem 5rem;
+      background: var(--brown);
+    }
+
+    .calendar-section .section-title { color: var(--cream); }
+    .calendar-section .section-label { color: var(--terracotta-light); }
+    .calendar-section .section-desc { color: rgba(245, 239, 230, 0.6); }
+
+    .calendar-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .cal-month {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+    }
+
+    .cal-nav {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: var(--cream);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .cal-nav:hover { background: rgba(255,255,255,0.2); }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-name {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: rgba(245, 239, 230, 0.4);
+      padding: 0.4rem 0;
+      text-transform: uppercase;
+    }
+
+    .cal-day {
+      text-align: center;
+      padding: 0.6rem 0.2rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: rgba(245, 239, 230, 0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .cal-day.empty { cursor: default; }
+
+    .cal-day.available {
+      color: var(--cream);
+    }
+
+    .cal-day.available:hover {
+      background: rgba(196, 113, 74, 0.3);
+      color: var(--white);
+    }
+
+    .cal-day.selected {
+      background: var(--terracotta);
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .cal-day.today {
+      border: 1.5px solid rgba(245, 239, 230, 0.3);
+    }
+
+    .cal-day.unavailable {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .cal-dot {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+
+    .time-slots {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .time-slots h4 {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(245, 239, 230, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .time-slot {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 0.55rem 0.3rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .time-slot:hover, .time-slot.selected {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .time-slot.taken {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .cal-gcal-notice {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: rgba(245, 239, 230, 0.5);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.2rem;
+    }
+
+    .gcal-icon {
+      width: 24px; height: 24px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--brown);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer .logo { color: var(--cream); }
+
+    footer p {
+      font-size: 0.82rem;
+      color: rgba(245, 239, 230, 0.4);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── QUESTIONNAIRE ─── */
+    .questionnaire {
+      padding: 6rem 5rem;
+      background: var(--warm-beige);
+    }
+
+    .quest-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .quest-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .quest-badge {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .quest-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .quest-badge strong {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--brown);
+      margin-bottom: 0.2rem;
+    }
+
+    .quest-badge p {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .whatsapp-card {
+      background: #e8f5e1;
+      border-radius: 16px;
+      padding: 1.4rem;
+      text-align: center;
+      border: 1.5px solid rgba(37, 211, 102, 0.25);
+    }
+
+    .whatsapp-card p {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      background: #1ebe5a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    /* ─── WHATSAPP FLOATING ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+      z-index: 200;
+      transition: all 0.3s;
+      animation: pulse-wa 2.5s infinite;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+    }
+
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); }
+      50%       { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.8); }
+    }
+
+    /* ─── MODAL SUCCESS ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 46, 40, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .modal-emoji { font-size: 3rem; margin-bottom: 1rem; }
+
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--brown);
+      margin-bottom: 0.7rem;
+    }
+
+    .modal p { font-size: 0.92rem; color: var(--text-light); line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .modal-close {
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { gap: 1.2rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-text { padding: 9rem 1.5rem 4rem; }
+      .services { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .booking { padding: 4rem 1.5rem; }
+      .booking-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .calendar-section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo"><span class="accent">Psi</span><span class="muted">corlo</span><span class="accent">gía</span></div>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#cuestionario">Sin pago previo</a></li>
+      <li><a href="#reservar" class="nav-cta">Reservar consulta</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+
+    <div class="hero-text">
+      <span class="hero-tag">Psicología · Bienestar emocional</span>
+      <h1 class="hero-title">
+        Un espacio <em>seguro</em><br>para sanar y crecer
+      </h1>
+      <p class="hero-subtitle">
+        Acompañamiento psicológico profesional, accesible y flexible. Agenda tu primera consulta hoy — en línea o presencial — y da el primer paso con confianza.
+      </p>
+      <div class="hero-btns">
+        <a href="#reservar" class="btn-primary">Agendar mi consulta →</a>
+        <a href="#servicios" class="btn-secondary">Ver servicios</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="card-float">
+        <h3>Próximas disponibilidades</h3>
+        <p>Selecciona un horario y reserva al instante</p>
+        <div class="mini-slot">
+          <span>Hoy · 4:00 PM</span>
+          <div class="slot-dot available"></div>
+        </div>
+        <div class="mini-slot">
+          <span>Hoy · 5:30 PM</span>
+          <div class="slot-dot available"></div>
+        </div>
+        <div class="mini-slot">
+          <span>Mañana · 10:00 AM</span>
+          <div class="slot-dot taken"></div>
+        </div>
+        <div class="mini-slot">
+          <span>Mañana · 3:00 PM</span>
+          <div class="slot-dot available"></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><strong>+200</strong><small>pacientes atendidos</small></div>
+          <div class="stat"><strong>4.9★</strong><small>valoración</small></div>
+          <div class="stat"><strong>100%</strong><small>confidencial</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="servicios" class="services section">
+    <div class="section-header">
+      <span class="section-label">Servicios</span>
+      <h2 class="section-title">¿Cómo puedo <em>ayudarte?</em></h2>
+      <p class="section-desc">Cada persona es única. Ofrezco distintas modalidades para adaptarme a tus necesidades y ritmo de vida.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3 class="service-title">Primera Consulta</h3>
+        <p class="service-desc">Una sesión inicial para conocernos, explorar lo que te trae y trazar un camino juntos. Sin compromisos.</p>
+        <div class="service-price">
+          <span class="price-amount">$350</span>
+          <span class="price-label">MXN / sesión</span>
+        </div>
+        <span class="service-tag">🌐 En línea disponible</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3 class="service-title">Consulta En Línea</h3>
+        <p class="service-desc">Sesiones de seguimiento de 50 minutos desde la comodidad de tu hogar, con la misma calidad y atención.</p>
+        <div class="service-price">
+          <span class="price-amount">$500</span>
+          <span class="price-label">MXN / sesión</span>
+        </div>
+        <span class="service-tag">🌐 Videollamada</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📍</div>
+        <h3 class="service-title">Consulta Presencial</h3>
+        <p class="service-desc">Sesiones de seguimiento de 50 minutos en consultorio, para quienes prefieren el encuentro cara a cara.</p>
+        <div class="service-price">
+          <span class="price-amount">$650</span>
+          <span class="price-label">MXN / sesión</span>
+        </div>
+        <span class="service-tag">📍 En consultorio</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3 class="service-title">Paquete Mensual</h3>
+        <p class="service-desc">4 sesiones al mes con descuento especial. Ideal para procesos terapéuticos continuos y sostenidos.</p>
+        <div class="service-price">
+          <span class="price-amount">$2,300</span>
+          <span class="price-label">MXN / mes</span>
+        </div>
+        <span class="service-tag">⭐ Más popular</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="agenda" class="calendar-section section">
+    <div class="section-header">
+      <span class="section-label">Agenda</span>
+      <h2 class="section-title">Elige tu <em>horario</em></h2>
+      <p class="section-desc">Consulta la disponibilidad en tiempo real y selecciona el día y hora que mejor te funcione.</p>
+    </div>
+
+    <div class="calendar-wrapper">
+      <div class="cal-header">
+        <button class="cal-nav" onclick="prevMonth()">‹</button>
+        <div class="cal-month" id="cal-month-label">Febrero 2026</div>
+        <button class="cal-nav" onclick="nextMonth()">›</button>
+      </div>
+
+      <div class="cal-grid" id="cal-grid">
+        <!-- Days filled by JS -->
+      </div>
+
+      <div class="time-slots" id="time-slots" style="display:none;">
+        <h4>Horarios disponibles</h4>
+        <div class="slots-grid" id="slots-grid"></div>
+      </div>
+
+      <div class="cal-gcal-notice">
+        <div class="gcal-icon">📅</div>
+        Sincronización con Google Calendar disponible al confirmar la reserva.
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <section id="reservar" class="booking section">
+    <div class="booking-inner">
+      <div class="booking-info">
+        <span class="section-label">Reservar</span>
+        <h2>Tu primera <em>consulta</em> comienza aquí</h2>
+        <p>Completa el formulario con tus datos y el motivo de tu visita. Una vez confirmado el pago, recibirás una invitación a tu calendario.</p>
+
+        <div class="info-item">
+          <div class="info-icon">🔒</div>
+          <span>Toda la información es completamente confidencial.</span>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">⚡</div>
+          <span>Confirmación inmediata por correo electrónico.</span>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📅</div>
+          <span>Invitación automática a Google Calendar.</span>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💳</div>
+          <span>Pago seguro con tarjeta, transferencia o Mercado Pago.</span>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Datos de la consulta</h3>
+        <form id="booking-form" onsubmit="handleSubmit(event)">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre completo *</label>
+              <input type="text" id="nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="edad">Edad *</label>
+              <input type="number" id="edad" placeholder="Ej. 28" min="1" max="100" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo electrónico *</label>
+            <input type="email" id="email" placeholder="tu@correo.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" placeholder="+52 55 0000 0000" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dia-preferencia">Día de preferencia *</label>
+              <select id="dia-preferencia" required>
+                <option value="" disabled selected>Selecciona un día</option>
+                <option>Lunes</option>
+                <option>Martes</option>
+                <option>Miércoles</option>
+                <option>Jueves</option>
+                <option>Viernes</option>
+                <option>Sábado</option>
+                <option>Sin preferencia</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="horario-preferencia">Horario de preferencia *</label>
+              <select id="horario-preferencia" required>
+                <option value="" disabled selected>Selecciona un horario</option>
+                <option>Mañana (8:00 – 12:00)</option>
+                <option>Tarde (12:00 – 16:00)</option>
+                <option>Noche (16:00 – 20:00)</option>
+                <option>Sin preferencia</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Forma de pago *</label>
+            <div class="modality-group" style="flex-wrap:wrap; gap:0.5rem;">
+              <div class="modality-option">
+                <input type="radio" name="forma-pago" id="pago-tarjeta" value="Tarjeta" checked />
+                <label for="pago-tarjeta" class="modality-label">💳 Tarjeta</label>
+              </div>
+              <div class="modality-option">
+                <input type="radio" name="forma-pago" id="pago-transferencia" value="Transferencia" />
+                <label for="pago-transferencia" class="modality-label">🏦 Transferencia</label>
+              </div>
+              <div class="modality-option">
+                <input type="radio" name="forma-pago" id="pago-oxxo" value="OXXO" />
+                <label for="pago-oxxo" class="modality-label">🏪 OXXO</label>
+              </div>
+              <div class="modality-option">
+                <input type="radio" name="forma-pago" id="pago-mp" value="Mercado Pago" />
+                <label for="pago-mp" class="modality-label">📱 Mercado Pago</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Modalidad de consulta *</label>
+            <div class="modality-group">
+              <div class="modality-option">
+                <input type="radio" name="modalidad" id="mod-online" value="online" checked />
+                <label for="mod-online" class="modality-label">🌐 En línea</label>
+              </div>
+              <div class="modality-option">
+                <input type="radio" name="modalidad" id="mod-presencial" value="presencial" />
+                <label for="mod-presencial" class="modality-label">📍 Presencial</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="servicio">Tipo de consulta *</label>
+            <select id="servicio" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="primera">Primera Consulta — $350 MXN</option>
+              <option value="online">Consulta En Línea — $500 MXN</option>
+              <option value="presencial">Consulta Presencial — $650 MXN</option>
+              <option value="paquete">Paquete Mensual — $2,300 MXN</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="motivo">Motivo de consulta *</label>
+            <textarea id="motivo" placeholder="Cuéntame brevemente qué te trae a esta consulta..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            💳 Confirmar y proceder al pago
+          </button>
+
+          <p class="payment-notice">🔒 Pago procesado de forma segura · Confirmación inmediata</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONNAIRE SECTION -->
+  <section id="cuestionario" class="questionnaire section">
+    <div class="section-header">
+      <span class="section-label">Sin pago previo</span>
+      <h2 class="section-title">¿Prefieres pagar <em>en consultorio?</em></h2>
+      <p class="section-desc">Llena este formulario y me pongo en contacto contigo para confirmar tu cita. Los datos se guardan automáticamente en mi registro.</p>
+    </div>
+
+    <div class="quest-inner">
+      <div class="form-card">
+        <h3>Solicitud de consulta sin pago previo</h3>
+        <form id="quest-form" onsubmit="handleQuestSubmit(event)">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="q-nombre">Nombre completo *</label>
+              <input type="text" id="q-nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="q-edad">Edad *</label>
+              <input type="number" id="q-edad" placeholder="Ej. 28" min="1" max="100" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="q-email">Correo electrónico *</label>
+              <input type="email" id="q-email" placeholder="tu@correo.com" required />
+            </div>
+            <div class="form-group">
+              <label for="q-telefono">Teléfono / WhatsApp *</label>
+              <input type="tel" id="q-telefono" placeholder="+52 55 0000 0000" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="q-dia">Día de preferencia *</label>
+              <select id="q-dia" required>
+                <option value="" disabled selected>Selecciona un día</option>
+                <option>Lunes</option>
+                <option>Martes</option>
+                <option>Miércoles</option>
+                <option>Jueves</option>
+                <option>Viernes</option>
+                <option>Sábado</option>
+                <option>Sin preferencia</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="q-horario">Horario de preferencia *</label>
+              <select id="q-horario" required>
+                <option value="" disabled selected>Selecciona un horario</option>
+                <option>Mañana (8:00 – 12:00)</option>
+                <option>Tarde (12:00 – 16:00)</option>
+                <option>Noche (16:00 – 20:00)</option>
+                <option>Sin preferencia</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Modalidad de consulta *</label>
+            <div class="modality-group">
+              <div class="modality-option">
+                <input type="radio" name="q-modalidad" id="q-mod-online" value="En línea" checked />
+                <label for="q-mod-online" class="modality-label">🌐 En línea</label>
+              </div>
+              <div class="modality-option">
+                <input type="radio" name="q-modalidad" id="q-mod-presencial" value="Presencial" />
+                <label for="q-mod-presencial" class="modality-label">📍 Presencial</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="q-servicio">Tipo de consulta *</label>
+            <select id="q-servicio" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>Primera Consulta — $350 MXN</option>
+              <option>Consulta En Línea — $500 MXN</option>
+              <option>Consulta Presencial — $650 MXN</option>
+              <option>Paquete Mensual — $2,300 MXN</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="q-motivo">Motivo de consulta *</label>
+            <textarea id="q-motivo" placeholder="Cuéntame brevemente qué te trae a esta consulta..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" style="background: var(--sage-dark);">
+            📋 Enviar solicitud
+          </button>
+          <p class="payment-notice">📊 Tus datos se registran de forma segura · Te contactaré para confirmar</p>
+        </form>
+      </div>
+
+      <div class="quest-info">
+        <div class="quest-badge">
+          <span class="quest-icon">💚</span>
+          <div>
+            <strong>Pago en consultorio</strong>
+            <p>Efectivo, transferencia o lo que prefieras al llegar.</p>
+          </div>
+        </div>
+        <div class="quest-badge">
+          <span class="quest-icon">📞</span>
+          <div>
+            <strong>Confirmación por WhatsApp</strong>
+            <p>Te contactaré en menos de 24 horas para confirmar tu cita.</p>
+          </div>
+        </div>
+        <div class="quest-badge">
+          <span class="quest-icon">📊</span>
+          <div>
+            <strong>Registro automático</strong>
+            <p>Tus datos se guardan en Google Sheets al instante.</p>
+          </div>
+        </div>
+
+        <div class="whatsapp-card">
+          <p>¿Prefieres escribirme directamente?</p>
+          <a href="https://wa.me/525636198703?text=Hola,%20me%20gustar%C3%ADa%20agendar%20una%20consulta%20de%20psicolog%C3%ADa." target="_blank" class="whatsapp-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <a href="https://wa.me/525636198703?text=Hola,%20me%20gustar%C3%ADa%20agendar%20una%20consulta%20de%20psicolog%C3%ADa." target="_blank" class="whatsapp-float" title="Escríbenos por WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo"><span class="accent">Psi</span><span class="muted">corlo</span><span class="accent">gía</span></div>
+    <p>© 2026 · Psicorlogía · Todos los derechos reservados</p>
+  </footer>
+
+  <!-- QUEST SUCCESS MODAL -->
+  <div class="modal-overlay" id="modal-quest" onclick="closeQuestModal(event)">
+    <div class="modal">
+      <div class="modal-emoji">📋</div>
+      <h3>¡Solicitud enviada!</h3>
+      <p>Recibí tus datos. Me pondré en contacto contigo en menos de 24 horas para confirmar tu cita. También puedes escribirme directamente por WhatsApp.</p>
+      <a href="https://wa.me/525636198703" target="_blank" class="whatsapp-btn" style="margin-bottom:0.8rem; display:inline-flex;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribir por WhatsApp
+      </a><br>
+      <button class="modal-close" onclick="closeQuestModal()" style="background:var(--sage-dark);">Entendido ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal">
+      <div class="modal-emoji">🌿</div>
+      <h3>¡Solicitud recibida!</h3>
+      <p>Gracias por dar este paso. En breve recibirás un correo de confirmación con los detalles de tu consulta y el enlace de pago.</p>
+      <button class="modal-close" onclick="closeModal()">Entendido ✓</button>
+    </div>
+  </div>
+
+  <script>
+    // ─── CALENDAR ───
+    const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    let currentDate = new Date(2026, 1, 1); // Feb 2026
+    let selectedDay = null;
+    let selectedSlot = null;
+
+    const availableDays = [20, 21, 23, 24, 25, 26, 27];
+    const timeSlots = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+    const takenSlots = ['10:00 AM','3:00 PM'];
+
+    function renderCalendar() {
+      const label = document.getElementById('cal-month-label');
+      const grid = document.getElementById('cal-grid');
+      label.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+      const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+      const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 0).getDate();
+      const today = new Date();
+
+      const dayNames = ['Do','Lu','Ma','Mi','Ju','Vi','Sá'];
+      let html = dayNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+      for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = d === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+        const isAvail = availableDays.includes(d);
+        const isSelected = d === selectedDay;
+        const cls = [
+          'cal-day',
+          isAvail ? 'available' : 'unavailable',
+          isToday ? 'today' : '',
+          isSelected ? 'selected' : ''
+        ].filter(Boolean).join(' ');
+
+        html += `<div class="${cls}" onclick="${isAvail ? `selectDay(${d})` : ''}">
+          ${d}
+          ${isAvail && !isSelected ? '<div class="cal-dot"></div>' : ''}
+        </div>`;
+      }
+
+      grid.innerHTML = html;
+
+      if (selectedDay) renderSlots();
+    }
+
+    function selectDay(d) {
+      selectedDay = d;
+      selectedSlot = null;
+      renderCalendar();
+      document.getElementById('time-slots').style.display = 'block';
+    }
+
+    function renderSlots() {
+      const grid = document.getElementById('slots-grid');
+      grid.innerHTML = timeSlots.map(t => {
+        const isTaken = takenSlots.includes(t);
+        const isSel = t === selectedSlot;
+        return `<div class="time-slot ${isTaken ? 'taken' : ''} ${isSel ? 'selected' : ''}"
+          onclick="${!isTaken ? `selectSlot('${t}')` : ''}">${t}</div>`;
+      }).join('');
+    }
+
+    function selectSlot(t) {
+      selectedSlot = t;
+      renderSlots();
+    }
+
+    function prevMonth() {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      selectedDay = null;
+      document.getElementById('time-slots').style.display = 'none';
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      selectedDay = null;
+      document.getElementById('time-slots').style.display = 'none';
+      renderCalendar();
+    }
+
+    renderCalendar();
+
+    // ─── FORM ───
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const btn = document.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Generando tu link de pago...';
+
+      const datos = {
+        nombre:    document.getElementById('nombre').value,
+        edad:      document.getElementById('edad').value,
+        email:     document.getElementById('email').value,
+        telefono:  document.getElementById('telefono').value,
+        modalidad: document.querySelector('input[name="modalidad"]:checked').value,
+        servicio:  document.getElementById('servicio').value,
+        motivo:    document.getElementById('motivo').value,
+      };
+
+      try {
+        // Llamar a nuestra función de Vercel
+        const response = await fetch('/api/crear-pago', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos),
+        });
+
+        const result = await response.json();
+
+        if (result.url_pago) {
+          // Redirigir a Mercado Pago para que el usuario complete el pago
+          window.location.href = result.url_pago;
+        } else {
+          throw new Error('No se recibió URL de pago');
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al procesar tu solicitud. Por favor intenta de nuevo.');
+        btn.disabled = false;
+        btn.innerHTML = '💳 Confirmar y proceder al pago';
+      }
+    }
+
+    // ─── CUESTIONARIO SIN PAGO → GOOGLE SHEETS ───
+    async function handleQuestSubmit(e) {
+      e.preventDefault();
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Enviando...';
+
+      const datos = {
+        nombre:    document.getElementById('q-nombre').value,
+        edad:      document.getElementById('q-edad').value,
+        email:     document.getElementById('q-email').value,
+        telefono:  document.getElementById('q-telefono').value,
+        dia:       document.getElementById('q-dia').value,
+        horario:   document.getElementById('q-horario').value,
+        modalidad: document.querySelector('input[name="q-modalidad"]:checked').value,
+        servicio:  document.getElementById('q-servicio').value,
+        motivo:    document.getElementById('q-motivo').value,
+        fecha:     new Date().toLocaleString('es-MX'),
+      };
+
+      try {
+        // IMPORTANTE: Reemplaza esta URL con la de tu Google Apps Script
+        // (Ver instrucciones en GUIA-GOOGLE-SHEETS.md)
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxOYKIrawuDoT7kbrYP8VGa0pzcHbyxYNF3-MaNnrWKK370nwLtlTYFmH3zAX8WWLAK/exec';
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos),
+        });
+
+        // Mostrar modal de éxito
+        document.getElementById('modal-quest').classList.add('active');
+        e.target.reset();
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo o escríbenos por WhatsApp.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '📋 Enviar solicitud';
+      }
+    }
+
+    function closeQuestModal(e) {
+      if (!e || e.target === document.getElementById('modal-quest') || !e.target.closest) {
+        document.getElementById('modal-quest').classList.remove('active');
+      }
+    }
+      if (!e || e.target === document.getElementById('modal-overlay') || !e.target.closest) {
+        document.getElementById('modal-overlay').classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>
