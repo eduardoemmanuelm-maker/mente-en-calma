@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog · Psicorlogía | Artículos de Salud Mental</title>
+  <meta name="description" content="Artículos sobre salud mental escritos por psicóloga profesional en CDMX. Temas: ansiedad, depresión, relaciones, adolescentes, autoestima y mindfulness." />
+  <meta property="og:title" content="Blog Psicorlogía · Artículos de Salud Mental" />
+  <meta property="og:description" content="Recursos y artículos sobre ansiedad, depresión, relaciones, autoestima y bienestar emocional." />
+  <meta property="og:url" content="https://psicorlogia.vercel.app/blog.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream: #f5efe6;
+      --warm-beige: #e8ddd0;
+      --terracotta: #c4714a;
+      --terracotta-light: #d9896a;
+      --sage: #7a9e87;
+      --sage-dark: #4e7460;
+      --brown: #5c3d2e;
+      --brown-light: #8b6354;
+      --text: #3a2e28;
+      --text-light: #7a6a60;
+      --white: #fdfaf7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245, 239, 230, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 113, 74, 0.15);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--brown);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .logo span.accent { color: var(--terracotta); font-style: italic; }
+    .logo span.muted { color: var(--brown-light); font-style: normal; }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    nav ul a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    nav ul a:hover { color: var(--terracotta); }
+
+    .nav-cta {
+      background: var(--terracotta) !important;
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 500 !important;
+      transition: background 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--terracotta-light) !important; }
+
+    /* ─── HERO BLOG ─── */
+    .blog-hero {
+      padding: 10rem 5rem 5rem;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .blog-hero-tag {
+      display: inline-block;
+      background: rgba(122, 158, 135, 0.2);
+      color: var(--sage-dark);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+
+    .blog-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--brown);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .blog-hero h1 em { font-style: italic; color: var(--terracotta); }
+
+    .blog-hero p {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ─── ARTICLES GRID ─── */
+    .articles-section {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 5rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .article-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(92, 61, 46, 0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .article-card:nth-child(1) { animation-delay: 0.1s; }
+    .article-card:nth-child(2) { animation-delay: 0.2s; }
+    .article-card:nth-child(3) { animation-delay: 0.3s; }
+    .article-card:nth-child(4) { animation-delay: 0.4s; }
+    .article-card:nth-child(5) { animation-delay: 0.5s; }
+    .article-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(92, 61, 46, 0.12);
+    }
+
+    .article-thumb {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+    }
+
+    .thumb-ansiedad { background: linear-gradient(135deg, #f5e6d3, #e8c9a0); }
+    .thumb-depresion { background: linear-gradient(135deg, #d3dff5, #a0b8e8); }
+    .thumb-relaciones { background: linear-gradient(135deg, #f5d3d3, #e8a0a0); }
+    .thumb-adolescentes { background: linear-gradient(135deg, #d3f5e6, #a0e8c0); }
+    .thumb-autoestima { background: linear-gradient(135deg, #f5f0d3, #e8d8a0); }
+    .thumb-mindfulness { background: linear-gradient(135deg, #e6d3f5, #c0a0e8); }
+
+    .article-body { padding: 1.5rem; }
+
+    .article-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      margin-bottom: 0.7rem;
+    }
+
+    .tag-ansiedad { background: rgba(196,113,74,0.12); color: var(--terracotta); }
+    .tag-depresion { background: rgba(100,130,200,0.12); color: #5570b8; }
+    .tag-relaciones { background: rgba(200,100,100,0.12); color: #b85555; }
+    .tag-adolescentes { background: rgba(78,116,96,0.12); color: var(--sage-dark); }
+    .tag-autoestima { background: rgba(180,150,50,0.12); color: #8a7020; }
+    .tag-mindfulness { background: rgba(140,100,180,0.12); color: #7050a8; }
+
+    .article-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--brown);
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .article-excerpt {
+      font-size: 0.86rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--warm-beige);
+      padding-top: 0.8rem;
+    }
+
+    .read-more {
+      color: var(--terracotta);
+      font-weight: 500;
+      font-size: 0.82rem;
+    }
+
+    /* ─── MODAL ARTICLE ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 46, 40, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-article {
+      background: var(--white);
+      border-radius: 24px;
+      max-width: 720px;
+      width: 100%;
+      margin: auto;
+      overflow: hidden;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .modal-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+
+    .modal-content { padding: 2.5rem; }
+
+    .modal-content .article-tag { margin-bottom: 1rem; }
+
+    .modal-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--brown);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-content .modal-meta {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--warm-beige);
+    }
+
+    .modal-content .article-text {
+      font-size: 0.96rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    .modal-content .article-text h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--brown);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .modal-content .article-text p { margin-bottom: 1rem; }
+
+    .modal-cta {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--cream);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .modal-cta p {
+      font-size: 0.92rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .modal-cta a {
+      display: inline-block;
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: all 0.3s;
+    }
+
+    .modal-cta a:hover { background: var(--terracotta-light); }
+
+    .modal-close-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: 1.5px solid var(--warm-beige);
+      color: var(--text-light);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover { border-color: var(--brown-light); color: var(--brown); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--brown);
+      padding: 2rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p { font-size: 0.82rem; color: rgba(245, 239, 230, 0.4); }
+
+    /* ─── WHATSAPP ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+      z-index: 200;
+      transition: all 0.3s;
+    }
+
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { gap: 1rem; }
+      .blog-hero { padding: 8rem 1.5rem 3rem; }
+      .articles-section { padding: 2rem 1.5rem 4rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">
+      <span class="accent">Psi</span><span class="muted">corlo</span><span class="accent">gía</span>
+    </a>
+    <ul>
+      <li><a href="index.html#servicios">Servicios</a></li>
+      <li><a href="index.html#agenda">Agenda</a></li>
+      <li><a href="index.html#reservar" class="nav-cta">Reservar consulta</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="blog-hero">
+    <span class="blog-hero-tag">📖 Blog · Salud Mental</span>
+    <h1>Recursos para tu <em>bienestar</em><br>emocional</h1>
+    <p>Artículos escritos para acompañarte, informarte y ayudarte a entender mejor lo que sientes. Porque el conocimiento también sana.</p>
+  </div>
+
+  <!-- ARTICLES -->
+  <section class="articles-section">
+    <div class="articles-grid">
+
+      <!-- 1. Ansiedad -->
+      <div class="article-card" onclick="openArticle('ansiedad')">
+        <div class="article-thumb thumb-ansiedad">🌀</div>
+        <div class="article-body">
+          <span class="article-tag tag-ansiedad">Ansiedad y estrés</span>
+          <h2 class="article-title">¿Qué es la ansiedad y cómo saber si la estás viviendo?</h2>
+          <p class="article-excerpt">La ansiedad es más que nerviosismo. Aprende a identificar sus señales y qué puedes hacer cuando aparece en tu vida diaria.</p>
+          <div class="article-meta">
+            <span>5 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Depresión -->
+      <div class="article-card" onclick="openArticle('depresion')">
+        <div class="article-thumb thumb-depresion">🌧️</div>
+        <div class="article-body">
+          <span class="article-tag tag-depresion">Depresión</span>
+          <h2 class="article-title">Depresión: más allá de la tristeza</h2>
+          <p class="article-excerpt">Entender la depresión es el primer paso para salir de ella. Te explicamos qué es, qué no es, y cuándo buscar ayuda profesional.</p>
+          <div class="article-meta">
+            <span>6 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Relaciones -->
+      <div class="article-card" onclick="openArticle('relaciones')">
+        <div class="article-thumb thumb-relaciones">💞</div>
+        <div class="article-body">
+          <span class="article-tag tag-relaciones">Relaciones y pareja</span>
+          <h2 class="article-title">Vínculos sanos: ¿cómo son las relaciones que nos nutren?</h2>
+          <p class="article-excerpt">No todas las relaciones nos hacen bien. Descubre las características de un vínculo saludable y cómo construirlo desde adentro.</p>
+          <div class="article-meta">
+            <span>5 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Adolescentes -->
+      <div class="article-card" onclick="openArticle('adolescentes')">
+        <div class="article-thumb thumb-adolescentes">🌱</div>
+        <div class="article-body">
+          <span class="article-tag tag-adolescentes">Adolescentes</span>
+          <h2 class="article-title">La adolescencia por dentro: emociones que no siempre se dicen</h2>
+          <p class="article-excerpt">La adolescencia es una etapa de grandes cambios internos. Entender lo que viven los jóvenes es clave para acompañarlos mejor.</p>
+          <div class="article-meta">
+            <span>5 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Autoestima -->
+      <div class="article-card" onclick="openArticle('autoestima')">
+        <div class="article-thumb thumb-autoestima">✨</div>
+        <div class="article-body">
+          <span class="article-tag tag-autoestima">Autoestima</span>
+          <h2 class="article-title">Autoestima real: quererte sin condiciones</h2>
+          <p class="article-excerpt">La autoestima no se construye con frases motivacionales. Te contamos qué es en realidad y cómo trabajarla desde un lugar honesto.</p>
+          <div class="article-meta">
+            <span>5 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Mindfulness -->
+      <div class="article-card" onclick="openArticle('mindfulness')">
+        <div class="article-thumb thumb-mindfulness">🍃</div>
+        <div class="article-body">
+          <span class="article-tag tag-mindfulness">Mindfulness y bienestar</span>
+          <h2 class="article-title">Vivir el presente: una introducción al mindfulness</h2>
+          <p class="article-excerpt">El mindfulness no es vaciar la mente. Es aprender a estar donde estás. Descubre cómo esta práctica puede cambiar tu día a día.</p>
+          <div class="article-meta">
+            <span>4 min de lectura</span>
+            <span class="read-more">Leer artículo →</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal-article" id="modal-article">
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/525636198703?text=Hola,%20leí%20el%20blog%20y%20me%20gustaría%20agendar%20una%20consulta." target="_blank" class="whatsapp-float">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html" class="logo" style="color:var(--cream);">
+      <span class="accent">Psi</span><span class="muted">corlo</span><span class="accent">gía</span>
+    </a>
+    <p>© 2026 · Psicorlogía · Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    const articulos = {
+      ansiedad: {
+        emoji: '🌀',
+        thumb: 'thumb-ansiedad',
+        tag: '<span class="article-tag tag-ansiedad">Ansiedad y estrés</span>',
+        titulo: '¿Qué es la ansiedad y cómo saber si la estás viviendo?',
+        tiempo: '5 min de lectura',
+        contenido: `
+          <p>La ansiedad es una respuesta natural del cuerpo ante situaciones de amenaza o incertidumbre. En pequeñas dosis, nos ayuda a reaccionar, a prepararnos, a estar alertas. El problema surge cuando esa respuesta se vuelve constante, desproporcionada o aparece sin una razón clara.</p>
+
+          <h3>¿Cómo se siente la ansiedad?</h3>
+          <p>La ansiedad no siempre se parece a lo que imaginamos. No es solo "estar nerviosa". Puede manifestarse como tensión muscular, dificultad para respirar, pensamientos acelerados, dificultad para dormir, irritabilidad, o incluso dolores físicos sin causa médica aparente.</p>
+          <p>También puede aparecer como una sensación persistente de que algo malo va a pasar, aunque no sepas exactamente qué. Esa inquietud que no te deja estar tranquila ni en los momentos que deberían ser buenos.</p>
+
+          <h3>¿Cuándo se convierte en un problema?</h3>
+          <p>Cuando la ansiedad empieza a interferir con tu vida cotidiana — con tu trabajo, tus relaciones, tu descanso — es momento de prestarle atención. No significa que algo esté "muy mal" contigo. Significa que tu sistema nervioso necesita apoyo.</p>
+
+          <h3>¿Qué puedes hacer?</h3>
+          <p>Algunas estrategias que ayudan en el corto plazo: respiración profunda y lenta, movimiento físico, escribir lo que sientes, hablar con alguien de confianza. Sin embargo, si la ansiedad es intensa o frecuente, el acompañamiento psicológico marca una diferencia real.</p>
+          <p>En terapia podemos identificar los patrones que alimentan tu ansiedad y trabajar juntas para transformarlos. No tienes que enfrentarlo sola.</p>
+        `
+      },
+      depresion: {
+        emoji: '🌧️',
+        thumb: 'thumb-depresion',
+        tag: '<span class="article-tag tag-depresion">Depresión</span>',
+        titulo: 'Depresión: más allá de la tristeza',
+        tiempo: '6 min de lectura',
+        contenido: `
+          <p>Una de las ideas más extendidas sobre la depresión es que es simplemente "estar muy triste". Pero la depresión es mucho más compleja que eso, y entenderla mejor es el primer paso para poder salir de ella.</p>
+
+          <h3>¿Qué es la depresión realmente?</h3>
+          <p>La depresión es un estado en el que la mente y el cuerpo pierden energía, motivación y capacidad de disfrute. No siempre incluye llanto o tristeza visible. A veces se parece más al vacío, a la indiferencia, a no sentir casi nada. A levantarse cada día sintiéndote pesada, sin ganas, como si todo requiriera un esfuerzo enorme.</p>
+
+          <h3>Señales que vale la pena tomar en cuenta</h3>
+          <p>Pérdida de interés en cosas que antes disfrutabas. Cambios en el sueño o el apetito. Dificultad para concentrarte. Sensación de que nada tiene sentido o de que no vales lo suficiente. Cansancio que no desaparece con el descanso. Si llevas semanas así, merece atención.</p>
+
+          <h3>¿Por qué aparece?</h3>
+          <p>No hay una sola causa. Puede ser una combinación de factores biológicos, experiencias de vida, pérdidas, estrés sostenido, o situaciones que te hicieron sentir que no tienes salida. La depresión no es una elección ni una debilidad de carácter.</p>
+
+          <h3>¿Cuándo buscar ayuda?</h3>
+          <p>Si llevas más de dos semanas sintiéndote así, si está afectando tu trabajo o tus relaciones, o si tienes pensamientos de hacerte daño, es importante buscar apoyo profesional. La depresión tiene tratamiento y la terapia psicológica es una de las herramientas más efectivas.</p>
+          <p>No tienes que esperar a tocar fondo para pedir ayuda. Pedir apoyo a tiempo es un acto de valentía y de cuidado hacia ti misma.</p>
+        `
+      },
+      relaciones: {
+        emoji: '💞',
+        thumb: 'thumb-relaciones',
+        tag: '<span class="article-tag tag-relaciones">Relaciones y pareja</span>',
+        titulo: 'Vínculos sanos: ¿cómo son las relaciones que nos nutren?',
+        tiempo: '5 min de lectura',
+        contenido: `
+          <p>Todas las personas necesitamos vínculos. Somos seres relacionales por naturaleza. Pero no todas las relaciones nos hacen bien, y a veces cuesta reconocerlo cuando estamos dentro de ellas.</p>
+
+          <h3>¿Qué hace sana a una relación?</h3>
+          <p>Una relación sana no significa que no haya conflictos. Los conflictos son normales y hasta necesarios. Lo que marca la diferencia es cómo se gestionan. En una relación que nutre, hay espacio para expresar lo que sientes sin miedo, hay respeto aunque no estén de acuerdo, y hay voluntad de los dos lados de encontrar soluciones.</p>
+
+          <h3>Señales de una relación que nos resta</h3>
+          <p>Sientes que caminas sobre cáscaras de huevo. Te sientes menos tú misma con el tiempo. Hay críticas constantes o silencios que castigan. Sientes culpa con frecuencia sin entender bien por qué. Tu pareja o la otra persona minimiza lo que sientes.</p>
+
+          <h3>El papel de nuestra historia</h3>
+          <p>Muchas veces elegimos relaciones que repiten patrones aprendidos en la infancia, no porque queramos sufrir, sino porque lo conocido se siente familiar. La terapia ayuda a entender esos patrones y a elegir de manera más consciente.</p>
+
+          <h3>Construir desde adentro</h3>
+          <p>Una relación sana comienza con la relación que tienes contigo misma. Cuando conoces tus necesidades, tus límites y tu valor, puedes comunicarlos y también reconocer cuando algo no te hace bien. No hay relación perfecta, pero sí puede haber una que te permita crecer.</p>
+        `
+      },
+      adolescentes: {
+        emoji: '🌱',
+        thumb: 'thumb-adolescentes',
+        tag: '<span class="article-tag tag-adolescentes">Adolescentes</span>',
+        titulo: 'La adolescencia por dentro: emociones que no siempre se dicen',
+        tiempo: '5 min de lectura',
+        contenido: `
+          <p>La adolescencia es una de las etapas más intensas de la vida. Por fuera puede parecer rebeldía, distancia o actitud. Por dentro, muchas veces hay confusión, inseguridad y una búsqueda de identidad que no tiene palabras todavía.</p>
+
+          <h3>Lo que viven los adolescentes</h3>
+          <p>El cerebro adolescente está literalmente en construcción. La parte que regula las emociones y la toma de decisiones aún no termina de desarrollarse. Eso explica por qué las emociones pueden sentirse tan intensas, por qué los impulsos son difíciles de controlar, y por qué a veces parece que "todo es un drama".</p>
+          <p>No es exageración. Es biología más historia personal más presión social, todo al mismo tiempo.</p>
+
+          <h3>Lo que más necesitan</h3>
+          <p>Los adolescentes necesitan sentirse vistos y escuchados, no juzgados. Necesitan tener un espacio donde lo que sienten sea válido, aunque no siempre sea conveniente o fácil de manejar. Y necesitan adultos que no desaparezcan aunque ellos pongan distancia.</p>
+
+          <h3>Señales de que algo necesita atención</h3>
+          <p>Cambios bruscos en el humor o comportamiento. Aislamiento prolongado. Pérdida del interés en todo. Cambios en el sueño o la alimentación. Comentarios sobre no querer estar aquí. Ante cualquiera de estas señales, buscar apoyo profesional es la decisión correcta.</p>
+
+          <h3>El valor de la terapia en esta etapa</h3>
+          <p>La terapia ofrece a los adolescentes un espacio neutral, confidencial y sin juicio para explorar lo que sienten. No es "estar loco". Es tener un lugar donde procesar lo que está pasando con alguien que sabe acompañar esa etapa.</p>
+        `
+      },
+      autoestima: {
+        emoji: '✨',
+        thumb: 'thumb-autoestima',
+        tag: '<span class="article-tag tag-autoestima">Autoestima</span>',
+        titulo: 'Autoestima real: quererte sin condiciones',
+        tiempo: '5 min de lectura',
+        contenido: `
+          <p>La autoestima se ha convertido en una palabra muy usada, pero poco comprendida. Se asocia con la seguridad, con decir que sí a todo, con no tener dudas. Pero la autoestima real es algo mucho más profundo y más honesto que eso.</p>
+
+          <h3>¿Qué es la autoestima en realidad?</h3>
+          <p>La autoestima es la valoración que hacemos de nosotras mismas. No se trata de creerte la mejor en todo, sino de reconocer tu valor como persona independientemente de lo que logres, de cómo te veas o de lo que otros piensen de ti. Es una base, no una actuación.</p>
+
+          <h3>¿De dónde viene una baja autoestima?</h3>
+          <p>Se construye desde temprano. Las palabras que escuchamos en casa, las experiencias que tuvimos en la escuela, las relaciones que hemos tenido. A veces internalizamos mensajes que no son verdad pero que se sienten como hechos: "no soy suficiente", "soy demasiado", "tengo que ganarme el amor".</p>
+
+          <h3>Señales de que tu autoestima necesita atención</h3>
+          <p>Te cuesta decir no. Buscas constantemente la aprobación de otros. Eres muy autocrítica. Minimizas tus logros. Te comparas mucho con otras personas. Sientes que debes demostrar constantemente tu valor.</p>
+
+          <h3>¿Cómo se trabaja?</h3>
+          <p>La autoestima no se construye leyendo frases bonitas. Se construye en la relación contigo misma, cuestionando las creencias que te limitan, aprendiendo a tratarte con la misma compasión que tratas a alguien que quieres. La terapia es un espacio muy poderoso para ese trabajo.</p>
+        `
+      },
+      mindfulness: {
+        emoji: '🍃',
+        thumb: 'thumb-mindfulness',
+        tag: '<span class="article-tag tag-mindfulness">Mindfulness y bienestar</span>',
+        titulo: 'Vivir el presente: una introducción al mindfulness',
+        tiempo: '4 min de lectura',
+        contenido: `
+          <p>Mindfulness se ha puesto de moda, y con eso han llegado muchas ideas confusas sobre lo que es. No es vaciar la mente. No es no pensar. No es relajarse necesariamente. Es algo más simple y más profundo a la vez.</p>
+
+          <h3>¿Qué es el mindfulness?</h3>
+          <p>Mindfulness es la capacidad de prestar atención al momento presente, con curiosidad y sin juzgar. Es notar lo que está pasando — en tu cuerpo, en tu mente, a tu alrededor — sin intentar cambiarlo de inmediato ni huir de ello.</p>
+          <p>La mayor parte del tiempo vivimos en piloto automático, pensando en lo que pasó ayer o en lo que puede pasar mañana. El mindfulness nos trae de regreso a ahora.</p>
+
+          <h3>¿Para qué sirve?</h3>
+          <p>La práctica regular de mindfulness ayuda a reducir el estrés y la ansiedad, mejora la capacidad de respuesta ante situaciones difíciles, aumenta la conciencia emocional y puede mejorar la calidad del sueño. No es magia, es entrenamiento.</p>
+
+          <h3>¿Cómo empezar?</h3>
+          <p>No necesitas una hora al día ni una app cara. Empieza con 5 minutos. Siéntate, cierra los ojos, y enfoca tu atención en tu respiración. Cuando tu mente se vaya — y se irá, eso es normal — regresa suavemente. Sin regañarte. Sin frustración. Solo regresas.</p>
+
+          <h3>Mindfulness y terapia</h3>
+          <p>El mindfulness es una herramienta que puede complementar muy bien el proceso terapéutico. En terapia podemos incorporarlo de manera personalizada, adaptado a lo que tú necesitas. No es la solución a todo, pero sí puede ser una parte valiosa de tu bienestar.</p>
+        `
+      }
+    };
+
+    function openArticle(id) {
+      const art = articulos[id];
+      const content = document.getElementById('modal-content');
+      content.innerHTML = `
+        <button class="modal-close-btn" onclick="closeModal()">← Volver al blog</button>
+        <div class="modal-thumb ${art.thumb}">${art.emoji}</div>
+        ${art.tag}
+        <h2>${art.titulo}</h2>
+        <div class="modal-meta">⏱ ${art.tiempo} · Psicorlogía</div>
+        <div class="article-text">${art.contenido}</div>
+        <div class="modal-cta">
+          <p>¿Este artículo resonó contigo? Dar el primer paso es más fácil de lo que parece.</p>
+          <a href="index.html#reservar">Agendar mi consulta →</a>
+        </div>
+      `;
+      document.getElementById('modal-overlay').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+  </script>
+</body>
+</html>
